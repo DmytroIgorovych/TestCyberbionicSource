@@ -1,0 +1,217 @@
+<!-- Модальне вікно1 Додавання та редагування автора-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Автор</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="row g-3 needs-validation" id="authorForm" [ngClass]="{'was-validated': authorForm.invalid}" [formGroup]="authorForm">
+        <div class="modal-body">
+            <div class="col">
+              <label for="validationCustom01" class="form-label">Прізвище</label>
+              <input type="text" formControlName="lastName" class="form-control" id="validationCustom01" required>
+              <div class="invalid-feedback">
+                Заповніть це поле!
+              </div>
+            </div>
+            <div class="col">
+              <label for="validationCustom02" class="form-label">Ім'я</label>
+              <input type="text" formControlName="firstName" name="firstName" class="form-control" id="validationCustom02" required>
+              <div class="invalid-feedback">
+                Заповніть це поле!
+              </div>
+            </div>  
+            
+            <div class="col">
+              <label for="validationCustom03" class="form-label">По батькові</label>
+              <input type="text" name="surname" formControlName="surname" class="form-control" id="validationCustom03">
+              <div class="invalid-feedback">
+                Заповніть це поле!
+              </div>
+            </div>
+            <div class="form-group col">
+              <label for="validationCustom04">Дата народження:</label>
+              <input type="date" formControlName="birthDate" class="form-control" id="validationCustom04" required>
+              <div class="invalid-feedback">
+                Заповніть це поле!
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" [disabled]="authorForm.invalid" data-bs-dismiss="modal" id="submit" class="btn btn-primary" (click)="saveAuthor()">Зберегти</button>
+          <button type="button" id="closeBtn" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Модальне вікно2 Додавання та редагування книги -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Книга</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="row g-3 needs-validation" novalidate [ngClass]="{'was-validated': bookForm.invalid}" [formGroup]="bookForm">
+        <div class="modal-body">
+          <div class="col">
+            <label for="validationCustom01" class="form-label">Назва</label>
+            <input type="text" formControlName="bookName" class="form-control" id="validationCustom01" required>
+            <div class="invalid-feedback">
+              Заповніть це поле!
+            </div>
+          </div>
+          <div class="col">
+            <label for="validationCustom02" class="form-label">Сторінок</label>
+            <input type="text" formControlName="numberOfPages" class="form-control" id="validationCustom02" required>
+            <div class="invalid-feedback">
+              Введіть число!
+            </div>
+          </div>  
+          <div class="col-md-4">
+            <label for="validationCustom03" class="form-label">Жанр:</label>
+            <select id="validationCustom03" class="form-select" required aria-label="select example" formControlName="bookGenre">
+              <option value="{{item}}" *ngFor="let item of this.genres">{{item}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="bookForm.invalid" (click)="saveBook()">Зберегти</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Модальне вікно3 Додавання та редагування жанру книги-->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModal3">Жанр</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="row g-3 needs-validation" id="genreForm" [ngClass]="{'was-validated': genreForm.invalid}" [formGroup]="genreForm" novalidate>
+        <div class="modal-body">
+          <div class="col-md-4">
+            <label for="validationCustom03" class="form-label">Жанр:</label>
+            <input id="validationCustom03" formControlName="genre" class="form-control" required>
+            <div class="invalid-feedback">
+              Заповніть це поле!
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="genreForm.invalid"  data-bs-dismiss="modal" (click)="saveGenre()">Зберегти</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="bd-cheatsheet container-fluid bg-body">
+  <div class="col-md-10 d-flex mb-3">
+    <input type="button" value="Автори" class="btn btn-primary me-3" (click)="authorGenreToggle=false">
+    <input type="button" value="Жанри" class="btn btn-primary" (click)="authorGenreToggle=true; showInfo=false">
+    <form class="d-flex ms-auto" role="search">
+      <input class="form-control me-2"  id="validationCustom03" type="search" name="search" [(ngModel)]="searchInput" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+      
+    </form>
+  </div>
+  <!-- Таблиця з даними -->
+  <div class="col-md-10" *ngIf="!authorGenreToggle">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" (click)="sortBy('lastName')">Автор</th>
+          <th scope="col" (click)="sortBy('books')">Книжок в базі</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr *ngFor="let item of authors | searchPipe:searchInput; let i=index">
+          <th scope="row">{{i+1}} </th>
+          <td>{{item.lastName}} {{item.firstName}} {{item.surname}} </td>
+          <td>{{item.books.length}}</td>
+          <td><button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editAuthor(item, i)">Редагувати</button></td>
+          <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteAuthor(i)">Видалити</button></td>
+          <td><button type="button" class="btn btn-outline-info btn-sm" (click)="showtInfo(item, i)">Інформація</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="invalid-feedback d-block" *ngIf="searchErrorToggle">
+      за Вашим запитом нічого не знайдено
+    </div>
+    <button type="button" id="addAuthor" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="addAuthor()">
+      Додати автора
+    </button>
+  </div>
+  <div class="col-md-10" *ngIf="authorGenreToggle">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" id="genre" (click)="sortByGenre($event)">Жанр</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of this.genres; let i=index">
+          <th scope="row">{{i+1}} </th>
+          <td>{{item}}</td>
+          <td><button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal3" (click)="editGenre(i)">Редагувати</button></td>
+          <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteGenre(i)">Видалити</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" id="addGenre" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3" (click)="addGenre()">
+      Додати жанр
+    </button>
+  </div>
+  <!-- Детальна інформація про автора і книжки -->
+  <div class="authors col-6 d-flex mt-5">
+    <ng-template [ngIf]="showInfo">
+      <div class="card d-flex" style="width: 22rem;" >
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">{{currentAuthor.firstName}} {{currentAuthor.surname}} {{currentAuthor.lastName}}</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="showInfo=false"></button>
+          </div>
+          <p>{{currentAuthor.birthDate}} </p>
+          <button type="button" (click)="addBook()" class="btn btn-outline-info btn-sm d-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            Додати книгу
+          </button>
+          <span>Книжки:</span>
+        </div>
+        <ul class="list-group list-group-flush" *ngFor="let element of currentAuthor.books; let i=index">
+          <li class="list-group-item books d-flex justify-content-between">
+            <div class="books_info">
+              <p class="mb-1">Назва: {{element.bookName}}</p>
+              <p class="mb-1">Сторінок: {{element.numberOfPages}}</p>
+              <p class="mb-1">Жанр: {{element.bookGenre}}</p>
+            </div>
+            <div class="books_buttons flex-column">
+              <button type="button" class="btn btn-outline-warning btn-sm me-3 d-block" (click)="editBook(i)" data-bs-toggle="modal" data-bs-target="#exampleModal2">Редагувати</button>
+              <button type="button" class="btn btn-outline-danger btn-sm d-block mt-3" (click)="deleteBook(i)">Видалити</button>
+            </div>
+          </li>
+        </ul>
+        
+      </div>
+    </ng-template>
+    
+  </div>
+
+</div>
+
+
